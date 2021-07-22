@@ -7,20 +7,16 @@ user_names.each do |user_name|
     email: "#{user_name.downcase}@website.com",
     password: 'password'
   )
-  user.save
+  user.save!
 end
 
 # Follows (has each user follow 6 others)
 users = User.all
-users.each do |user|
-  all_others = []
-  users.each do |another_user|
-    if user != another_user
-      all_others << another_user 
-    end
-  end
-  all_others.shuffle!
+users.each do |follower|
+  followee_ids = users.map {|followee| followee.id}
+  followee_ids.delete(follower.id)
+  followee_ids.shuffle!
   6.times do |i|
-    Follow.create(followee_id: all_others[i].id, follower_id: user.id)
+    Follow.create!(followee_id: followee_ids[i], follower_id: follower.id)
   end
 end
