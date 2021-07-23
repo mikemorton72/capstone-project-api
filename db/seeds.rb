@@ -46,8 +46,7 @@ user_ids.each do |user_id|
     Comment.create!(
       user_id: user_id,
       run_id: run.id,
-      text: comment_texts.sample,
-      date_time: run.date_time + rand(0..10**6)
+      text: comment_texts.sample
     )
   end
 end
