@@ -1,4 +1,3 @@
-
 # # Users
 user_names = ['Mike', 'Sally', 'Bob', 'Sue', 'Bill', 'Anne', 'Sean', 'Lauren', 'Kevin', 'Jill', 'Jack', 'Erin', 'Dan', 'Brynn', 'Byron']
 user_names.each do |user_name|
@@ -35,6 +34,20 @@ user_ids.each do |user_id|
       distance: distance, # in miles? maybe km
       elapsed_time: distance * 10 * 60, # in seconds assumes 10min/distance pace
       date_time: Time.now - rand(0..10**8)
+    )
+  end
+end
+
+# # Comments (10 for each user)
+comment_texts = ['Great pace', 'I ran there last week!','nice PR', 'Cool!','nice', 'Wow!', 'Keep it up', 'Nice!', 'Woah!', 'Amazing!', 'Nice improvement', 'Good effort', 'Very fast!', 'Congrats!']
+user_ids.each do |user_id|
+  10.times do
+    run = Run.all.sample
+    Comment.create!(
+      user_id: user_id,
+      run_id: run.id,
+      text: comment_texts.sample,
+      date_time: run.date_time + rand(0..10**6)
     )
   end
 end
