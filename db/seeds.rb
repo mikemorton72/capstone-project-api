@@ -33,7 +33,6 @@ user_ids.each do |user_id|
       title: run_titles.sample,
       distance: distance, # in miles? maybe km
       elapsed_time: distance * 10 * 60, # in seconds assumes 10min/distance pace
-      date_time: Time.now - rand(0..10**8)
     )
   end
 end
