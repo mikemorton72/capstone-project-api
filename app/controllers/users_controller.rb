@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  before_action :authenticate_user, except: :create
   def create
     user = User.new(
       name: params[:name],
@@ -13,6 +14,9 @@ class UsersController < ApplicationController
     end
   end
 
-  
+  def index
+    @users = User.all
+    render "index.json.jbuilder"
+  end
 
 end
