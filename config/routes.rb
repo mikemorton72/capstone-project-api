@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   post "/sessions" => "sessions#create"
   
   # Runs
+  get "/runs" => "runs#index"
   post "/runs" => "runs#create"
   
   # Follows
