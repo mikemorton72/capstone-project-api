@@ -9,6 +9,9 @@ Rails.application.routes.draw do
   # Runs
   post "/runs" => "runs#create"
   
+  # Follows
+  post "/follows" => "follows#create"
+
   # Strava
   get "/exchange_token" => "strava_oauth#initial_authorization"
 
