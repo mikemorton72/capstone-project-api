@@ -2,14 +2,18 @@ class FollowsController < ApplicationController
   before_action :authenticate_user
   
   def create
-    follow = Follow.new(
-      followee_id: params[:followee_id],
-      follower_id: current_user.id
-    )
-    if follow.save
-      render json: {message: "#{follow.follower.name} successfully followed #{follow.followee.name}"}
+    if Follow.find_by(follower_id: current_user.id, followee_id: params[:followee_id])
+      render json: {message: "#{current_user.name} is already following #{User.find_by(id: params[:followee_id]).name}"}
     else
-      render json: {errors: follow.errors.full_messages}
+      follow = Follow.new(
+        followee_id: params[:followee_id],
+        follower_id: current_user.id
+      )
+      if follow.save
+        render json: {message: "#{follow.follower.name} successfully followed #{follow.followee.name}"}
+      else
+        render json: {errors: follow.errors.full_messages}
+      end
     end
   end
   
