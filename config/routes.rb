@@ -18,5 +18,6 @@ Rails.application.routes.draw do
 
   # Strava
   get "/exchange_token" => "strava_oauth#initial_authorization"
+  get "/strava_runs" => "strava_oauth#index"
 
 end
