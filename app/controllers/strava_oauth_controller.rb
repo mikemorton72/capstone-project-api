@@ -24,15 +24,19 @@ class StravaOauthController < ApplicationController
   end
 
   def index
-    # Check if access_token has expired
-    if Time.now > current_user.strava_access_expiration
-      refresh_access_token()
+    if current_user.strava_access_token
+      # Check if access_token has expired
+      if Time.now > current_user.strava_access_expiration
+        refresh_access_token()
+      end
+      # Request user data from Strava
+      response = HTTP.headers(:Authorization => "Bearer #{current_user.strava_access_token}")
+      .get("https://www.strava.com/api/v3/athlete/activities")
+      strava_runs = response.parse(:json).select {|activity| activity['type'] == "Run"}
+      render json: strava_runs
+    else
+      render json: {message: "user account not linked to Strava"}
     end
-    # Request user data from Strava
-    response = HTTP.headers(:Authorization => "Bearer #{current_user.strava_access_token}")
-    .get("https://www.strava.com/api/v3/athlete/activities")
-    strava_runs = response.parse(:json).select {|activity| activity['type'] == "Run"}
-    render json: strava_runs
   end
 
   def refresh_access_token
