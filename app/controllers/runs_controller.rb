@@ -20,4 +20,18 @@ class RunsController < ApplicationController
       render json: {errors: run.errors.full_messages}, status: :unprocessable_entity
     end
   end
+
+  def destroy
+    run = Run.find_by(id: params[:id])
+    if run.user_id == current_user.id
+      if run
+        run.destroy
+        render json: {message: "#{run.title} was successfully destroyed"}
+      else
+        render json: {message: "run not found"}
+      end
+    else
+      render json: {message: "user cannot delete someone else's run"}
+    end
+  end
 end
