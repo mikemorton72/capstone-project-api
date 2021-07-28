@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   
   # Follows
   post "/follows" => "follows#create"
+  delete "/follows" => "follows#destroy" # this doesn't follow REST...review with Brian
 
   # Strava
   get "/exchange_token" => "strava_oauth#initial_authorization"

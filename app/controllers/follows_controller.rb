@@ -1,5 +1,6 @@
 class FollowsController < ApplicationController
   before_action :authenticate_user
+  
   def create
     follow = Follow.new(
       followee_id: params[:followee_id],
@@ -11,5 +12,14 @@ class FollowsController < ApplicationController
       render json: {errors: follow.errors.full_messages}
     end
   end
-
+  
+  def destroy
+    follow = Follow.find_by(follower_id: current_user.id, followee_id: params[:followee_id])
+    if follow
+      follow.destroy
+      render json: {message: "#{follow.follower.name} unfollowed #{follow.followee.name}"}
+    else
+      render json: {message: "Follow not found"}
+    end
+  end
 end
