@@ -9,4 +9,7 @@ class User < ApplicationRecord
   has_many :runs
   has_many :comments
 
+  def total_miles
+    self.runs.reduce(0) {|sum, run| sum += run.distance}
+  end
 end
