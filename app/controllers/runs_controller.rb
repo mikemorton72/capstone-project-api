@@ -3,8 +3,8 @@ class RunsController < ApplicationController
   def index
     run_index_user_ids = current_user.followees.map {|followee| followee.id} # pulls user_ids of all users that current_user follows
     run_index_user_ids << current_user.id # User can also view their own runs on index page
-    runs = Run.where(user_id: run_index_user_ids)
-    render json: runs
+    @runs = Run.where(user_id: run_index_user_ids)
+    render "index.json.jbuilder"
   end
 
   def create

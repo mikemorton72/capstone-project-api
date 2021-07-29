@@ -7,7 +7,7 @@ class StravaOauthController < ApplicationController
     # After they log in and authorize, a request with needed params will be sent to the route calling this controller method. 
 
     # initial token exchange request 
-    response = HTTP.post("https://www.strava.com/oauth/token?client_id=#{Rails.application.credentials.client_id}&client_secret=#{Rails.application.credentials.client_secret}&code=#{params[:code]}&scope&grant_type=authorization_code")
+    response = HTTP.post("https://www.strava.com/oauth/token?client_id=#{Rails.application.credentials.client_id}&client_secret=#{Rails.application.credentials.client_secret}&code=#{params[:code]}&scope=activity:read_all&grant_type=authorization_code")
     # pull tokens and expiration from response
     data = response.parse(:json)
     access_token = data['access_token']
@@ -41,7 +41,7 @@ class StravaOauthController < ApplicationController
 
   def refresh_access_token
     # send request for new tokens to Strava API
-    response = HTTP.post("https://www.strava.com/api/v3/oauth/token?client_id=#{Rails.application.credentials.client_id}&client_secret=#{Rails.application.credentials.client_secret}&refresh_token=#{current_user.strava_refresh_token}&scope&grant_type=refresh_token")
+    response = HTTP.post("https://www.strava.com/api/v3/oauth/token?client_id=#{Rails.application.credentials.client_id}&client_secret=#{Rails.application.credentials.client_secret}&refresh_token=#{current_user.strava_refresh_token}&scope=activity:read_all&grant_type=refresh_token")
     data = response.parse(:json)
     # Pull necessary data
     access_token = data['access_token']
