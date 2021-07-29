@@ -2,7 +2,7 @@ class StravaOauthController < ApplicationController
   before_action :authenticate_user, except: [:initial_authorization]
   def initial_authorization
     # Front end sends user to (make sure to include user id in query params as 'state')
-    # https://www.strava.com/oauth/authorize?client_id=68303&response_type=code&redirect_uri=http://localhost:3000/exchange_token&approval_prompt=force&scope=activity:read_all&state=#{current_user.id}
+    # https://www.strava.com/oauth/authorize?client_id=68303&response_type=code&redirect_uri=http://localhost:3000/strava_oauth/exchange_token&approval_prompt=force&scope=activity:read_all&state=#{current_user.id}
 
     # After they log in and authorize, a request with needed params will be sent to the route calling this controller method. 
 
@@ -26,7 +26,7 @@ class StravaOauthController < ApplicationController
   def index
     if current_user.strava_access_token
       # Check if access_token has expired
-      if Time.now > current_user.strava_access_expiration
+      if Time.now > current_user.strava_access_expiration        
         refresh_access_token()
       end
       # Request user data from Strava

@@ -17,7 +17,7 @@ Rails.application.routes.draw do
   delete "/follows/:followee_id" => "follows#destroy" # this doesn't follow REST...review with Brian
 
   # Strava
-  get "/exchange_token" => "strava_oauth#initial_authorization"
-  get "/strava_runs" => "strava_oauth#index"
+  get "/strava_oauth/exchange_token" => "strava_oauth#initial_authorization"
+  get "/strava_oauth/runs" => "strava_oauth#index"
 
 end
