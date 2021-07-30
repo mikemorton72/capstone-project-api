@@ -1,3 +1,4 @@
+json.id run.id
 json.user run.user.name
 json.title run.title
 json.distance run.distance

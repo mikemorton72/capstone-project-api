@@ -1,3 +1,4 @@
+json.id follow.id
 json.follower do
   json.id follow.follower_id
   json.name User.find_by(id: follow.follower_id).name
