@@ -1,0 +1,1 @@
+json.partial! @comment, partial: 'comments/comment', as: :comment

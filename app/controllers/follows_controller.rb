@@ -12,7 +12,7 @@ class FollowsController < ApplicationController
       if follow.save
         render json: {message: "#{follow.follower.name} successfully followed #{follow.followee.name}"}
       else
-        render json: {errors: follow.errors.full_messages}
+        render json: {errors: follow.errors.full_messages}, , status: :unprocessable_entity
       end
     end
   end
