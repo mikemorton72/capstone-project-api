@@ -1,0 +1,1 @@
+json.partial! @run, partial: 'runs/run', as: :run

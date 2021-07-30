@@ -8,16 +8,16 @@ class RunsController < ApplicationController
   end
 
   def create
-    run = Run.new(
+    @run = Run.new(
       user_id: current_user.id,
       title: params[:title],
       distance: params[:distance],
       elapsed_time: params[:elapsed_time]
     )
-    if run.save
-      render json: run
+    if @run.save
+      render "show.json.jbuilder"
     else
-      render json: {errors: run.errors.full_messages}, status: :unprocessable_entity
+      render json: {errors: @run.errors.full_messages}, status: :unprocessable_entity
     end
   end
 

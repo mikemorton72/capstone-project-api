@@ -5,14 +5,14 @@ class FollowsController < ApplicationController
     if Follow.find_by(follower_id: current_user.id, followee_id: params[:followee_id])
       render json: {message: "#{current_user.name} is already following #{User.find_by(id: params[:followee_id]).name}"}
     else
-      follow = Follow.new(
+      @follow = Follow.new(
         followee_id: params[:followee_id],
         follower_id: current_user.id
       )
-      if follow.save
-        render json: {message: "#{follow.follower.name} successfully followed #{follow.followee.name}"}
+      if @follow.save
+        render "show.json.jbuilder"
       else
-        render json: {errors: follow.errors.full_messages}, , status: :unprocessable_entity
+        render json: {errors: @follow.errors.full_messages}, status: :unprocessable_entity
       end
     end
   end
