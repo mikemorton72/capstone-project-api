@@ -11,6 +11,9 @@ Rails.application.routes.draw do
   get "/runs" => "runs#index"
   post "/runs" => "runs#create"
   delete "/runs/:id" => "runs#destroy"
+
+  # Comments
+  post "/comments" => "comments#create"
   
   # Follows
   post "/follows" => "follows#create"

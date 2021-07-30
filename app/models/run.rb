@@ -4,4 +4,8 @@ class Run < ApplicationRecord
   validates :elapsed_time, numericality: {greater_than: 0}
   belongs_to :user
   has_many :comments
+
+  def time_minutes
+    return self.elapsed_time.to_f / 60
+  end
 end
