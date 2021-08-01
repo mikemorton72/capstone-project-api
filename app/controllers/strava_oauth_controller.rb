@@ -26,9 +26,13 @@ class StravaOauthController < ApplicationController
   def index
     if current_user.strava_access_token
       # Check if access_token has expired
-      if Time.now > current_user.strava_access_expiration        
-        refresh_access_token()
+      p 'before token refresh'
+      p current_user.strava_access_token
+      if Time.now > current_user.strava_access_expiration    
+        refresh_access_token(current_user.id)
       end
+      p 'after token refresh'
+      p current_user.strava_access_token
       # Request user data from Strava
       response = HTTP.headers(:Authorization => "Bearer #{current_user.strava_access_token}")
       .get("https://www.strava.com/api/v3/athlete/activities")
@@ -39,18 +43,19 @@ class StravaOauthController < ApplicationController
     end
   end
 
-  def refresh_access_token
+  def refresh_access_token(user_id) # CURRENTLY NOT WORKING
     # send request for new tokens to Strava API
-    response = HTTP.post("https://www.strava.com/api/v3/oauth/token?client_id=#{Rails.application.credentials.client_id}&client_secret=#{Rails.application.credentials.client_secret}&refresh_token=#{current_user.strava_refresh_token}&scope=activity:read_all&grant_type=refresh_token")
+    response = HTTP.post("https://www.strava.com/api/v3/oauth/token?client_id=#{Rails.application.credentials.client_id}&client_secret=#{Rails.application.credentials.client_secret}&grant_type=refresh_token&refresh_token=#{current_user.strava_refresh_token}")
     data = response.parse(:json)
     # Pull necessary data
     access_token = data['access_token']
     access_token_expiration = Time.at(data['expires_at'])
     refresh_token = data['refresh_token']
-    # save to current_user
-    current_user.strava_access_token = access_token
-    current_user.strava_access_expiration = access_token_expiration
-    current_user.strava_refresh_token = refresh_token
-    current_user.save
+    # save to user
+    user = User.find_by(id: user_id)
+    user.strava_access_token = access_token
+    user.strava_access_expiration = access_token_expiration
+    user.strava_refresh_token = refresh_token
+    user.save
   end
 end

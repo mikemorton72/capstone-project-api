@@ -16,7 +16,7 @@ Rails.application.routes.draw do
   post "/comments" => "comments#create"
   
   # Follows
-  post "/follows" => "follows#create"
+  post "/follows/:followee_id" => "follows#create"
   delete "/follows/:followee_id" => "follows#destroy" # this doesn't follow REST...review with Brian
 
   # Strava
