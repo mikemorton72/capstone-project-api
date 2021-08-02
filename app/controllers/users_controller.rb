@@ -22,10 +22,6 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find_by(id: params[:id])
-    if current_user.followees.include?(@user)
-      render "show.json.jbuilder"
-    else
-      render json: {message: "Follow #{@user.name} to view their posts"}
-    end
+    render "show.json.jbuilder"
   end
 end
