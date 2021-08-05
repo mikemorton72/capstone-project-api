@@ -26,13 +26,9 @@ class StravaOauthController < ApplicationController
   def index
     if current_user.strava_access_token
       # Check if access_token has expired
-      p 'before token refresh'
-      p current_user.strava_access_token
       if Time.now > current_user.strava_access_expiration    
-        refresh_access_token(current_user.id)
+        refresh_access_token(current_user)
       end
-      p 'after token refresh'
-      p current_user.strava_access_token
       # Request user data from Strava
       response = HTTP.headers(:Authorization => "Bearer #{current_user.strava_access_token}")
       .get("https://www.strava.com/api/v3/athlete/activities")
@@ -43,7 +39,8 @@ class StravaOauthController < ApplicationController
     end
   end
 
-  def refresh_access_token(user_id) # CURRENTLY NOT WORKING
+  def refresh_access_token(user)
+    p 'refreshing'
     # send request for new tokens to Strava API
     response = HTTP.post("https://www.strava.com/api/v3/oauth/token?client_id=#{Rails.application.credentials.client_id}&client_secret=#{Rails.application.credentials.client_secret}&grant_type=refresh_token&refresh_token=#{current_user.strava_refresh_token}")
     data = response.parse(:json)
@@ -52,7 +49,6 @@ class StravaOauthController < ApplicationController
     access_token_expiration = Time.at(data['expires_at'])
     refresh_token = data['refresh_token']
     # save to user
-    user = User.find_by(id: user_id)
     user.strava_access_token = access_token
     user.strava_access_expiration = access_token_expiration
     user.strava_refresh_token = refresh_token

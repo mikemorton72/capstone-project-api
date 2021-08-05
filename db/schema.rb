@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_23_231636) do
+ActiveRecord::Schema.define(version: 2021_08_05_234841) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,6 +37,10 @@ ActiveRecord::Schema.define(version: 2021_07_23_231636) do
     t.integer "elapsed_time"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.float "start_latitude"
+    t.float "start_longitude"
+    t.string "summary_polyline"
+    t.boolean "is_strava_import"
   end
 
   create_table "users", force: :cascade do |t|
@@ -48,6 +52,7 @@ ActiveRecord::Schema.define(version: 2021_07_23_231636) do
     t.string "strava_access_token"
     t.string "strava_refresh_token"
     t.datetime "strava_access_expiration"
+    t.string "image"
   end
 
 end
