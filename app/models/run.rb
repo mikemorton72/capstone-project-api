@@ -5,10 +5,6 @@ class Run < ApplicationRecord
   belongs_to :user
   has_many :comments
 
-  def time_minutes
-    return self.elapsed_time.to_f / 60
-  end
-
   def distance_miles
     return self.distance * 0.000621371
   end
