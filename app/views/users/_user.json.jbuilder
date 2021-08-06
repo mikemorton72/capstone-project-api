@@ -1,4 +1,5 @@
 json.id user.id
+json.image user.image
 json.name user.name
 json.email user.email
 json.number_of_runs user.runs.count
