@@ -12,4 +12,12 @@ class User < ApplicationRecord
   def total_miles
     self.runs.reduce(0) {|sum, run| sum += run.distance_miles}
   end
+  
+  def has_strava
+    if self.strava_access_token
+      true
+    else
+      false
+    end
+  end
 end

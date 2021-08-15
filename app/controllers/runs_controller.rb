@@ -12,7 +12,8 @@ class RunsController < ApplicationController
       user_id: current_user.id,
       title: params[:title],
       distance: params[:distance],
-      elapsed_time: params[:elapsed_time]
+      elapsed_time: params[:elapsed_time],
+      is_strava_import: params[:is_strava_import],
     )
     if @run.save
       render "show.json.jbuilder"

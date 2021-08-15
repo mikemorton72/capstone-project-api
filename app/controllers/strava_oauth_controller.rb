@@ -20,7 +20,7 @@ class StravaOauthController < ApplicationController
     user.strava_refresh_token = refresh_token
     user.save
     # send user back to app frontend
-    redirect_to('http://localhost:8080')
+    redirect_to('http://localhost:8080?strava_initial_auth=true')
   end
 
   def index
@@ -52,6 +52,14 @@ class StravaOauthController < ApplicationController
     user.strava_access_token = access_token
     user.strava_access_expiration = access_token_expiration
     user.strava_refresh_token = refresh_token
+    user.save
+  end
+  
+  def destroy()
+    user = current_user
+    user.strava_access_token = nil
+    user.strava_access_expiration = nil
+    user.strava_refresh_token = nil
     user.save
   end
 end

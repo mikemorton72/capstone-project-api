@@ -22,5 +22,6 @@ Rails.application.routes.draw do
   # Strava
   get "/strava_oauth/exchange_token" => "strava_oauth#initial_authorization"
   get "/strava_oauth/runs" => "strava_oauth#index"
+  delete "/strava_oauth" => "strava_oauth#destroy"
 
 end
