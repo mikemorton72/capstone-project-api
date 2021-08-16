@@ -9,6 +9,7 @@ json.start_longitude run.start_longitude
 json.summary_polyline run.summary_polyline
 json.is_strava_import run.is_strava_import
 json.created_at run.created_at
+json.location_name run.location_name
 json.comments run.comments do |comment|
   json.partial! comment, partial: 'comments/comment', as: :comment
 end

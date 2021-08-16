@@ -18,11 +18,25 @@ class RunsController < ApplicationController
       title: params[:title],
       distance: params[:distance],
       elapsed_time: params[:elapsed_time],
-      is_strava_import: params[:is_strava_import],
+      is_strava_import: params[:is_strava_import] || false,
       start_latitude: params[:start_latitude],
       start_longitude: params[:start_longitude],
-      summary_polyline: params[:summary_polyline]
+      summary_polyline: params[:summary_polyline],
+      location_name: params[:location_name]
     )
+    if params[:is_strava_import]
+      results = Geocoder.search([params[:start_latitude], params[:start_longitude]])
+      location = results.first
+      @run.location_name = "#{location.town}, #{location.state}"
+    else
+      
+      results = Geocoder.search(params[:location_name]).first
+      if results
+        coordinates = results.coordinates
+        @run.start_latitude = coordinates[0]
+        @run.start_longitude = coordinates[1]
+      end
+    end
     if @run.save
       render "show.json.jbuilder"
     else
