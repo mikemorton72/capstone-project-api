@@ -14,6 +14,9 @@ class RunsController < ApplicationController
       distance: params[:distance],
       elapsed_time: params[:elapsed_time],
       is_strava_import: params[:is_strava_import],
+      start_latitude: params[:start_latitude],
+      start_longitude: params[:start_longitude],
+      summary_polyline: params[:summary_polyline]
     )
     if @run.save
       render "show.json.jbuilder"
