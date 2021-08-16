@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   
   # Runs
   get "/runs" => "runs#index"
+  get "runs/:id" => "runs#show"
   post "/runs" => "runs#create"
   delete "/runs/:id" => "runs#destroy"
 

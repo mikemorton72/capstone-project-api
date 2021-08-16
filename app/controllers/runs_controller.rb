@@ -7,6 +7,11 @@ class RunsController < ApplicationController
     render "index.json.jbuilder"
   end
 
+  def show
+    @run = Run.find_by(id: params[:id])
+    render "show.json.jbuilder"
+  end
+
   def create
     @run = Run.new(
       user_id: current_user.id,

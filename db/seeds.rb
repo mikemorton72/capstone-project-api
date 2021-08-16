@@ -39,7 +39,8 @@ run_locations = [[42.1105779, -88.0336888], [41.8755616, -87.6244212], [34.85135
       distance: distance, # in meters
       elapsed_time: distance * rand(0.24..0.45), # in seconds
       start_latitude: lat,
-      start_longitude: lng
+      start_longitude: lng,
+      is_strava_import: false
     )
   end
 end
