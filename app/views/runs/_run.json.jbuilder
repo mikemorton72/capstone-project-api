@@ -1,4 +1,5 @@
 json.id run.id
+json.user_id run.user.id
 json.user run.user.name
 json.user_image run.user.image
 json.title run.title

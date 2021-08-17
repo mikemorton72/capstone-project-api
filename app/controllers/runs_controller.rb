@@ -3,6 +3,9 @@ class RunsController < ApplicationController
   def index
     run_index_user_ids = current_user.followees.map {|followee| followee.id} # pulls user_ids of all users that current_user follows
     run_index_user_ids << current_user.id # User can also view their own runs on index page
+    if params[:user_id] # included in request as user_id when it's a User Show page
+      run_index_user_ids = params[:user_id]
+    end
     @runs = Run.where(user_id: run_index_user_ids)
     render "index.json.jbuilder"
   end
