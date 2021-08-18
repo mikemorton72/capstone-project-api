@@ -12,6 +12,18 @@ class User < ApplicationRecord
   def total_miles
     self.runs.reduce(0) {|sum, run| sum += run.distance_miles}
   end
+
+  def average_pace # units are min/mile
+    paces = self.runs.map {|run| run.elapsed_time / 60 / run.distance_miles}
+    sum = paces.reduce(0) {|sum, pace| sum += pace}
+    avg = sum / paces.length
+    minutes = (avg - avg % 1).to_i
+    seconds = (60 * (avg % 1)).to_i
+    if seconds.to_s.length < 2
+      seconds = "0#{seconds}"
+    end
+    "#{minutes}:#{seconds}"
+  end
   
   def has_strava
     if self.strava_access_token
