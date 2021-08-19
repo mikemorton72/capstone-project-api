@@ -6,7 +6,13 @@ class RunsController < ApplicationController
     if params[:user_id] # included in request as user_id when it's a User Show page
       run_index_user_ids = params[:user_id]
     end
-    @runs = Run.where(user_id: run_index_user_ids)
+    limit = 8
+    if params[:page]
+      offset = (params[:page].to_i - 1) * limit
+      @runs = Run.where(user_id: run_index_user_ids).order(created_at: :desc).offset(offset).limit(limit)
+    else
+      @runs = Run.where(user_id: run_index_user_ids).order(created_at: :desc).limit(limit)
+    end
     render "index.json.jbuilder"
   end
 
