@@ -11,4 +11,14 @@ class Run < ApplicationRecord
   def distance_miles
     return self.distance * 0.000621371
   end
+  
+  def pace
+    pace = self.elapsed_time / 60 / self.distance_miles
+    minutes = (pace - pace % 1).to_i
+    seconds = (60 * (pace % 1)).to_i
+    if seconds.to_s.length < 2
+      seconds = "0#{seconds}"
+    end
+    "#{minutes}:#{seconds}"
+  end
 end
