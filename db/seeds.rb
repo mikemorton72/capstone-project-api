@@ -1,6 +1,6 @@
-# # Users
-user_names = ['Mike', 'Sally', 'Bob', 'Sue', 'Bill', 'Anne', 'Sean', 'Lauren', 'Kevin', 'Jill', 'Jack', 'Erin', 'Dan', 'Brynn', 'Byron', 'Michael', 'Karen', 'James', 'Madeline', 'Jackson', 'Julia', 'Tracy', 'Robert', 'Jeremy', 'Greg', 'Cecily', 'Nick', 'Matt', 'Adriana', 'Orlando' ,'Cynthia', 'Zach', 'Brandon', 'Mitch', 'Tim', 'Tom', 'Christina', 'Bert']
-user_names.each do |user_name|
+# # # Users
+male_user_names = ['Mike', 'Sean', 'Dan', 'Jack', 'Niko', 'Tristan', 'Tony', 'Daniel', 'John', 'Byron', 'Michael', 'James', 'Robert', 'Jeremy', 'Nick', 'Matt', 'Orlando', 'Brandon', 'Mitch', 'Tim', 'Tom', 'Bert']
+male_user_names.each do |user_name|
   user = User.new(
     name: user_name,
     email: "#{user_name.downcase}@website.com",
@@ -10,8 +10,19 @@ user_names.each do |user_name|
   user.save!
 end
 
+female_user_names = ['Sue', 'Anne', 'Ellen', 'Shiela', 'Jeanne', 'Julie', 'Lauren', 'Jill', 'Erin', 'Brynn', 'Karen', 'Madeline', 'Julia', 'Adriana', 'Cynthia', 'Christina' 'Sally', 'Katie', 'Ellie']
+female_user_names.each do |user_name|
+  user = User.new(
+    name: user_name,
+    email: "#{user_name.downcase}@website.com",
+    password: 'password',
+    image: "https://avatars.dicebear.com/api/female/#{user_name}.svg"
+  )
+  user.save!
+end
 
-# # Follows (has each user follows 6 others)
+
+# # # Follows (has each user follows 6 others)
 users = User.all
 users.each do |follower|
   followee_ids = users.map {|followee| followee.id}
@@ -23,21 +34,27 @@ users.each do |follower|
 end
 
 
-# # Runs (4 for each user)
+# # # Runs (4 for each user)
 user_ids = User.all.map{|user| user.id}
-run_titles = ['Morning Run', 'Lunch Run', 'Afternoon Run', 'Night Run', 'Trail Run', 'Recovery Run', 'Interval Training', 'Easy Run', 'Park Run', 'Fast Run', 'Threshold Run', 'Fast Run']
-run_locations = [[42.1105779, -88.0336888], [41.8755616, -87.6244212], [34.851354, -82.3984882], [35.2272086, -80.8430827], [30.2711286, -97.7436995], [37.7790262, -122.419906], [47.6038321, -122.3300624], [39.1014537, -84.5124602], [38.0464066, -84.4970393], [43.0349931, -87.922497], [43.0393671, -89.3870443985615], [42.7876022, -86.1090828], [42.3800209, -88.2420315], [33.7849591, -84.442163], [25.7741728, -80.19362], [36.1565461, -86.77474161400752], [29.7589382, -95.3676974], [32.7762719, -96.7968559], [39.7284945, -121.8374777], [40.43624385, -86.92673255999318], [33.5859518, -7.6738855], [43.6166163, -116.200886], [45.5202471, -122.6741949], [5.3428475, -72.3959849]]
+run_titles = ['Morning Run', 'Lunch Run', 'Afternoon Run', 'Night Run', 'Trail Run', 'Recovery Run', 'Interval Training', 'Easy Run', 'Park Run', 'Fast Run', 'Threshold Run', 'Fast Run', 'Neighborhood Run', 'Run Around the Block', 'Quick Run', 'Hard Run']
+location_names = ['Chicago, IL', 'Palatine, IL', 'Charlotte, NC', 'Buffalo, NY', 'San Francisco, CA', 'Honolulu, Hawaii', 'Portland, OR', 'Nashville, TN', 'Austin, TX', 'Miami, FL', 'Atlanta, GA', 'Houston, TX', 'Dallas, TX', 'Palatine, IL', 'Cleveland, OH', 'Columbus, OH', 'Cincinnati, OH', 'Glen Ellyn, IL']
 5.times do
   user_ids.each do |user_id|
     distance = rand(3000..10000)
-    run_location = run_locations.sample
-    lat = run_location[0]
-    lng = run_location[1]
+    location_name = location_names.sample
+    p location_name
+    results = Geocoder.search(location_name).first
+    if results
+      coordinates = results.coordinates
+      lat = coordinates[0]
+      lng = coordinates[1]
+    end
     Run.create!(
       user_id: user_id,
       title: run_titles.sample,
       distance: distance, # in meters
       elapsed_time: distance * rand(0.24..0.45), # in seconds
+      location_name: location_name,
       start_latitude: lat,
       start_longitude: lng,
       is_strava_import: false
@@ -46,9 +63,9 @@ run_locations = [[42.1105779, -88.0336888], [41.8755616, -87.6244212], [34.85135
 end
 
 # # Comments (10 for each user)
-comment_texts = ['Great pace', 'I ran there last week!','nice PR', 'Cool!','nice', 'Wow!', 'Keep it up', 'Nice!', 'Woah!', 'Amazing!', 'Nice improvement', 'Good effort', 'Very fast!', 'Congrats!', 'Great job', 'Neato!', 'Excellent', 'Noice!']
+comment_texts = ['Great pace', 'I ran there last week!','nice PR', 'Cool!','nice', 'Wow!', 'Keep it up', 'Nice!', 'Woah!', 'Amazing!', 'Nice improvement', 'Good effort', 'Very fast!', 'Congrats!', 'Great job', 'Neato!', 'Excellent', 'Noice!', 'I can run faster']
 user_ids.each do |user_id|
-  10.times do
+  20.times do
     run = Run.all.sample
     Comment.create!(
       user_id: user_id,
