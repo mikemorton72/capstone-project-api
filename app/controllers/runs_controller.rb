@@ -42,6 +42,9 @@ class RunsController < ApplicationController
       if params[:using_my_current_location]
         @run.start_latitude = params[:start_latitude]
         @run.start_longitude = params[:start_longitude]
+        results = Geocoder.search([params[:start_latitude], params[:start_longitude]])
+        location = results.first
+        @run.location_name = "#{location.town}, #{location.state}"
       else
         results = Geocoder.search(params[:location_name]).first
         if results
