@@ -37,6 +37,7 @@ class RunsController < ApplicationController
       results = Geocoder.search([params[:start_latitude], params[:start_longitude]])
       location = results.first
       @run.location_name = "#{location.town}, #{location.state}"
+      @run.strava_id = params[:strava_id]
     else
       if params[:using_my_current_location]
         @run.start_latitude = params[:start_latitude]

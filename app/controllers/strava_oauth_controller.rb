@@ -33,7 +33,19 @@ class StravaOauthController < ApplicationController
       response = HTTP.headers(:Authorization => "Bearer #{current_user.strava_access_token}")
       .get("https://www.strava.com/api/v3/athlete/activities")
       strava_runs = response.parse(:json).select {|activity| activity['type'] == "Run"}
-      render json: strava_runs
+      imported_strava_run_ids = Run.where(user_id: current_user.id, is_strava_import: true).map {|run| run.strava_id}
+      p '************************'
+      p strava_runs.length
+      p '************************'
+      strava_runs.each do |run|
+        p run["id"]
+        p imported_strava_run_ids.include?(run["id"].to_s)
+      end
+      unimported_strava_runs = strava_runs.select {|run| !imported_strava_run_ids.include?(run["id"].to_s)}
+      p '************************'
+      p unimported_strava_runs.length
+      p '************************'
+      render json: unimported_strava_runs
     else
       render json: {message: "user account not linked to Strava"}
     end
