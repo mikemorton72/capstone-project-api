@@ -6,9 +6,9 @@ class UsersController < ApplicationController
     limit = 8
     if params[:page]
       offset = (params[:page].to_i - 1) * limit
-      @users = User.order(created_at: :desc).offset(offset).limit(limit)
+      @users = User.order(name: :asc).offset(offset).limit(limit)
     else
-      @users = User.order(created_at: :desc).limit(limit)
+      @users = User.order(name: :asc).limit(limit)
     end
     render "index.json.jbuilder"
   end
