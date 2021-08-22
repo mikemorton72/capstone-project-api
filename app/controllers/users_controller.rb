@@ -2,7 +2,6 @@ class UsersController < ApplicationController
   before_action :authenticate_user, except: :create
   
   def index
-    @users = User.all
     limit = 8
     if params[:page]
       offset = (params[:page].to_i - 1) * limit
