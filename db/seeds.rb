@@ -8,7 +8,6 @@ male_user_names.each do |user_name|
     image: "https://avatars.dicebear.com/api/male/#{user_name}.svg"
   )
   if user.save!
-    p "#{user.name} created"
   end
 end
 
@@ -34,7 +33,6 @@ users.each do |follower|
   followee_ids.shuffle!
   5.times do |i|
     Follow.create!(followee_id: followee_ids[i], follower_id: follower.id)
-    p "#{follower.name} followed User ##{followee_ids[i]}"
   end
 end
 
