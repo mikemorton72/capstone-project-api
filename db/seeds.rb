@@ -1,5 +1,5 @@
 # # # Users
-male_user_names = ['Mike', 'Sean', 'Dan', 'Jack', 'Niko', 'Tristan', 'Tony', 'Daniel', 'John', 'Byron', 'Michael', 'James', 'Robert', 'Nick', 'Matt', 'Brandon', 'Tim', 'Tom', 'Bert', 'Paul', 'Brian', 'Jacob', 'Tanner', 'Cole', 'Austin', 'Angel', 'Aaron', 'Lucas']
+male_user_names = ['Sean', 'Dan', 'Jack', 'Niko', 'Tristan', 'Tony', 'Daniel', 'John', 'Byron', 'Michael', 'James', 'Robert', 'Nick', 'Matt', 'Brandon', 'Tim', 'Tom', 'Bert', 'Paul', 'Brian', 'Jacob', 'Tanner', 'Cole', 'Austin', 'Angel', 'Aaron', 'Lucas']
 male_user_names.each do |user_name|
   user = User.new(
     name: user_name,
@@ -8,6 +8,7 @@ male_user_names.each do |user_name|
     image: "https://avatars.dicebear.com/api/male/#{user_name}.svg"
   )
   if user.save!
+    p "#{user.name} created"
   end
 end
 
@@ -40,7 +41,7 @@ end
 # # # Runs (5 for each user)
 user_ids = User.all.map{|user| user.id}
 run_titles = ['Morning Run', 'Lunch Run', 'Afternoon Run', 'Night Run', 'Trail Run', 'Recovery Run', 'Interval Training', 'Easy Run', 'Park Run', 'Fast Run', 'Threshold Run', 'Fast Run', 'Neighborhood Run', 'Run Around the Block', 'Quick Run', 'Hard Run']
-location_names = ['Chicago, IL', 'Palatine, IL', 'Charlotte, NC', 'Buffalo, NY', 'San Francisco, CA', 'Honolulu, Hawaii', 'Portland, OR', 'Nashville, TN', 'Austin, TX', 'Miami, FL', 'Atlanta, GA', 'Houston, TX', 'Dallas, TX', 'Palatine, IL', 'Cleveland, OH', 'Columbus, OH', 'Cincinnati, OH', 'Glen Ellyn, IL', 'West Lafayette, IN', 'Indianapolis, IN', 'Greenville, SC', 'Los Angeles, CA', 'Denver, CO', 'Park City, UT', 'Barrington, IL', 'Wauconda, IL', 'Boston, MA', 'New York City, NY', 'Seattle, WA', 'Las Vegas, NV', 'Anchorage, AK', 'Boise, ID']
+location_names = ['Chicago, IL', 'Palatine, IL', 'Charlotte, NC', 'Buffalo, NY', 'San Francisco, CA', 'Honolulu, Hawaii', 'Portland, OR', 'Nashville, TN', 'Austin, TX', 'Miami, FL', 'Atlanta, GA', 'Houston, TX', 'Dallas, TX', 'Palatine, IL', 'Cleveland, OH', 'Columbus, OH', 'Cincinnati, OH', 'Glen Ellyn, IL', 'West Lafayette, IN', 'Indianapolis, IN', 'Greenville, SC', 'Los Angeles, CA', 'Park City, UT', 'Barrington, IL', 'Wauconda, IL', 'Boston, MA', 'New York City, NY', 'Seattle, WA', 'Las Vegas, NV', 'Anchorage, AK', 'Boise, ID']
 5.times do
   user_ids.each do |user_id|
     distance = rand(3000..10000)
